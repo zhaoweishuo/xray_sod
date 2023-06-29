@@ -7,7 +7,6 @@ import time
 
 
 def try_gpu(i=0):
-    """如果存在，则返回gpu(i)，否则返回cpu()。"""
     if torch.cuda.device_count() >= i + 1:
         return torch.device(f'cuda:{i}')
     return torch.device('cpu')
@@ -33,9 +32,9 @@ net.load_state_dict(torch.load("./checkpoints/x-ray.pth", map_location=device)) 
 
 
 def test(model, test_loader, device=None):
-    model.eval()  # 测试过程中会使用model.eval()，这时神经网络会沿用batch normalization的值，并不使用dropout
+    model.eval()
     start = time.process_time()
-    # 测试时不计算梯度
+
     with torch.no_grad():
         for batch_idx, dict in enumerate(test_loader):
             x = dict['image'].to(device)
@@ -44,7 +43,7 @@ def test(model, test_loader, device=None):
             h = dict['h']
 
             out, _, _, _ = model(x)
-            image = out.squeeze(0).cpu().numpy()  # 去掉索引为0的空维度
+            image = out.squeeze(0).cpu().numpy()
             image *= 255
 
             for index, _ in enumerate(name):

@@ -1,8 +1,5 @@
-dataset/*
 .idea/
-log/
 .git/
-checkpoints/
-pretrained/
+checkpoints/*
 */__pycache__
 __pycache__

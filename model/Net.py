@@ -10,7 +10,7 @@ class LightNet(nn.Module):
         super(LightNet, self).__init__()
 
         self.encoder = Encoder()
-        # 加载预训练模型并将用到的层提取出来并改名
+
         if pretrained:
             pretrained_dict = torch.load(pretrained)
             my_state_dict = OrderedDict()
